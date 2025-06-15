@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: "https://fourbtech-frontend.onrender.com",
     credentials: true,
   })
 );
