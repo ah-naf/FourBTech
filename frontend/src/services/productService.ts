@@ -1,10 +1,9 @@
 export const getApiBaseUrl = () => {
-  return process.env.NEXT_PUBLIC_API_BASE_URL;
+  return "https://fourbtech.onrender.com/api";
 };
 
 export const getBackendBaseUrl = () => {
-  console.log(process.env.NEXT_PUBLIC_BACKEND_BASE_URL);
-  return process.env.NEXT_PUBLIC_BACKEND_BASE_URL;
+  return "https://fourbtech.onrender.com";
 };
 
 const getAuthToken = (): string | null => {

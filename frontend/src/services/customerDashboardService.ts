@@ -35,7 +35,7 @@ interface ActiveOrderResponse {
   activeOrder: ActiveOrder | null;
 }
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const API_BASE_URL = "https://fourbtech.onrender.com/api";
 const DASHBOARD_API_URL = `${API_BASE_URL}/customer/dashboard`;
 
 const getAuthToken = (): string | null => {
