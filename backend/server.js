@@ -29,7 +29,7 @@ mongoose
   .catch((err) => console.error("MongoDB connection error:", err));
 
 app.get("/", (req, res) => {
-  res.send("Backend server is running");
+  res.send("Backend server is running https://fourbtech-frontend.onrender.com");
 });
 
 // Auth Routes
