@@ -10,8 +10,7 @@ import React, {
 import axios from "axios";
 import { LoginCredentials, RegistrationData, User } from "@/types";
 
-axios.defaults.baseURL =
-  process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "http://localhost:5000";
+axios.defaults.baseURL = "https://fourbtech.onrender.com";
 axios.defaults.withCredentials = true;
 
 export interface AuthContextType {
