@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    // Allow loading images from localhost:5000
     remotePatterns: [
       {
         protocol: "http",
@@ -15,9 +14,13 @@ const nextConfig = {
         port: "5000",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "fourbtech.onrender",
+        port: "",
+        pathname: "/**",
+      },
     ],
-    // Optionally, allow localhost with default loader
-    domains: ["localhost", "127.0.0.1"],
   },
 };
 

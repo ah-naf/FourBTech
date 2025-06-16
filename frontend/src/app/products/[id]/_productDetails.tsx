@@ -29,7 +29,6 @@ export default function ProductDetails({ product }: Props) {
 
   const { general, pricing, inventory, specifications, additional, seller } =
     product;
-  
 
   const isSellerProduct = !!(
     product.seller &&
@@ -42,7 +41,7 @@ export default function ProductDetails({ product }: Props) {
       ? pricing.salePrice
       : pricing.price;
   const imageUrl = general.images?.[0]
-    ? `http://localhost:5000${general.images[0]}`
+    ? `https://fourbtech.onrender.com${general.images[0]}`
     : "https://placehold.co/600x600/333333/ffffff?text=No+Image";
 
   return (

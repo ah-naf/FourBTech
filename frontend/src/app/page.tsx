@@ -184,7 +184,7 @@ export default function HomePage() {
                           product.general.images?.[0]
                             ? `${
                                 process.env.NEXT_PUBLIC_BACKEND_BASE_URL ||
-                                "http://localhost:5000"
+                                "https://fourbtech.onrender.com"
                               }${product.general.images[0]}`
                             : "/placeholder-image.svg"
                         }
