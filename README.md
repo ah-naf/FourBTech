@@ -1,4 +1,4 @@
-## You will find a demo video in root folder named demo.mp4
+## You will find a demo video which shows how to use it in root folder named demo.mp4
 
 # E-Commerce Platform
 
