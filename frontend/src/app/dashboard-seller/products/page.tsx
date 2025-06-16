@@ -35,8 +35,6 @@ import { deleteProduct, getSellerProducts } from "@/services/productService";
 import { toast } from "sonner";
 import { Product } from "@/types";
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
-
 const StatusBadge = ({ quantity }: { quantity: number }) => {
   let status = "Active";
   let variant: "default" | "secondary" | "destructive" = "default";
