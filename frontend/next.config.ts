@@ -14,12 +14,7 @@ const nextConfig = {
         port: "5000",
         pathname: "/**",
       },
-      {
-        protocol: "https",
-        hostname: "fourbtech.onrender",
-        port: "",
-        pathname: "/**",
-      },
+      new URL("https://fourbtech.onrender.com/**"),
     ],
   },
 };

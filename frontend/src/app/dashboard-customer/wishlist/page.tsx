@@ -20,6 +20,7 @@ import {
   DialogDescription,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { useAuth } from "@/context/AuthContext";
 
 export default function WishlistPage() {
   const {
@@ -29,7 +30,7 @@ export default function WishlistPage() {
     clearWishlist,
   } = useWishlist();
   const { addToCart, cartItems, isLoading: isCartLoading } = useCart();
-
+  const { user } = useAuth();
   const [detailedWishlistProducts, setDetailedWishlistProducts] = useState<
     Product[]
   >([]);
@@ -248,92 +249,107 @@ export default function WishlistPage() {
       {!isLoading && detailedWishlistProducts.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-x-6 gap-y-10">
           {" "}
-          {detailedWishlistProducts.map((product) => (
-            <Card
-              key={product.id}
-              className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white flex flex-col"
-            >
-              <Link href={`/products/${product.id}`} passHref className="block">
-                <div className="overflow-hidden relative w-full h-60 sm:h-56">
-                  {" "}
-                  <Image
-                    src={
-                      product.general.images?.[0]
-                        ? `${getBackendBaseUrl()}${product.general.images[0]}`
-                        : "/placeholder-image.svg"
-                    }
-                    alt={product.general.title}
-                    layout="fill"
-                    objectFit="cover"
-                    className="group-hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-              </Link>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-3 right-3 z-10 h-9 w-9 bg-white/70 backdrop-blur-sm rounded-full text-gray-500 hover:text-red-600 hover:bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity"
-                onClick={() => handleDeleteItem(product.id)}
-                disabled={isWishlistLoading}
-                title="Remove from wishlist"
+          {detailedWishlistProducts.map((product) => {
+            const isSellerProduct = !!(
+              product.seller &&
+              user &&
+              product.seller === user._id
+            );
+            console.log("first", isSellerProduct)
+            return (
+              <Card
+                key={product.id}
+                className="group relative overflow-hidden rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300 bg-white flex flex-col"
               >
-                <Trash2 className="h-5 w-5" />
-              </Button>
-
-              <CardContent className="p-4 flex flex-col flex-grow">
-                {" "}
-                <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">
-                  {product.general.category}
-                </p>
-                <h3
-                  className="font-semibold text-lg text-gray-800 truncate mb-1 flex-grow"
-                  title={product.general.title}
+                <Link
+                  href={`/products/${product.id}`}
+                  passHref
+                  className="block"
                 >
-                  <Link
-                    href={`/products/${product.id}`}
-                    className="hover:text-red-500 transition-colors"
-                  >
-                    {product.general.title}
-                  </Link>
-                </h3>
-                <div className="flex items-center justify-between mt-3 mb-3">
-                  <p className="text-xl font-bold text-gray-900">
-                    ${product.pricing.price.toFixed(2)}
-                  </p>
-                  {product.pricing.enableNegotiation && (
-                    <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
-                      Negotiable
-                    </span>
-                  )}
-                </div>
-                <p className="text-xs text-gray-500 mb-4">
-                  SKU: {product.inventory.sku} | Stock:{" "}
-                  {product.inventory.quantity > 0
-                    ? `${product.inventory.quantity} available`
-                    : "Out of Stock"}
-                </p>
-                <div className="mt-auto">
+                  <div className="overflow-hidden relative w-full h-60 sm:h-56">
+                    {" "}
+                    <Image
+                      src={
+                        product.general.images?.[0]
+                          ? `${getBackendBaseUrl()}${product.general.images[0]}`
+                          : "/placeholder-image.svg"
+                      }
+                      alt={product.general.title}
+                      layout="fill"
+                      objectFit="cover"
+                      className="group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </div>
+                </Link>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-3 right-3 z-10 h-9 w-9 bg-white/70 backdrop-blur-sm rounded-full text-gray-500 hover:text-red-600 hover:bg-white/90 opacity-0 group-hover:opacity-100 transition-opacity"
+                  onClick={() => handleDeleteItem(product.id)}
+                  disabled={isWishlistLoading}
+                  title="Remove from wishlist"
+                >
+                  <Trash2 className="h-5 w-5" />
+                </Button>
+
+                <CardContent className="p-4 flex flex-col flex-grow">
                   {" "}
-                  <Button
-                    size="sm"
-                    className="w-full bg-red-500 hover:bg-red-600 text-white h-10 px-4 flex items-center justify-center gap-2 transition-colors"
-                    onClick={() => handleMoveToCart(product)}
-                    disabled={
-                      isCartLoading ||
-                      isWishlistLoading ||
-                      isFetchingDetails ||
-                      product.inventory.quantity === 0
-                    }
+                  <p className="text-xs text-gray-500 mb-1 uppercase tracking-wider">
+                    {product.general.category}
+                  </p>
+                  <h3
+                    className="font-semibold text-lg text-gray-800 truncate mb-1 flex-grow"
+                    title={product.general.title}
                   >
-                    <ShoppingCart className="mr-1 h-4 w-4" />{" "}
+                    <Link
+                      href={`/products/${product.id}`}
+                      className="hover:text-red-500 transition-colors"
+                    >
+                      {product.general.title}
+                    </Link>
+                  </h3>
+                  <div className="flex items-center justify-between mt-3 mb-3">
+                    <p className="text-xl font-bold text-gray-900">
+                      ${product.pricing.price.toFixed(2)}
+                    </p>
+                    {product.pricing.enableNegotiation && (
+                      <span className="text-xs font-medium bg-green-100 text-green-700 px-2 py-0.5 rounded-full">
+                        Negotiable
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-xs text-gray-500 mb-4">
+                    SKU: {product.inventory.sku} | Stock:{" "}
                     {product.inventory.quantity > 0
-                      ? "Move to Cart"
+                      ? `${product.inventory.quantity} available`
                       : "Out of Stock"}
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                  </p>
+                  <div className="mt-auto">
+                    {" "}
+                    <Button
+                      size="sm"
+                      className="w-full bg-red-500 hover:bg-red-600 text-white h-10 px-4 flex items-center justify-center gap-2 transition-colors"
+                      onClick={() => handleMoveToCart(product)}
+                      disabled={
+                        isCartLoading ||
+                        isSellerProduct ||
+                        isWishlistLoading ||
+                        isFetchingDetails ||
+                        product.inventory.quantity === 0
+                      }
+                    >
+                      <ShoppingCart className="mr-1 h-4 w-4" />{" "}
+                      {isSellerProduct
+                        ? "Own product"
+                        : product.inventory.quantity > 0
+                        ? "Move to Cart"
+                        : "Out of Stock"}
+                    </Button>
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
       )}
     </main>

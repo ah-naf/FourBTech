@@ -136,7 +136,7 @@ export default function ProductsPage() {
       cell: (product: Product) => {
         const imageUrl =
           product.general.images?.length > 0
-            ? `${API_BASE_URL}${product.general.images[0]}`
+            ? `https://fourbtech.onrender.com${product.general.images[0]}`
             : "/placeholder-image.png";
         return (
           <img

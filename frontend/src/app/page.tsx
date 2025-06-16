@@ -232,6 +232,7 @@ export default function HomePage() {
                       <Button
                         variant="outline"
                         size="icon"
+                        disabled={isSellerProduct}
                         className={`border-gray-300 hover:bg-red-50 ${
                           isWishlisted(product.id)
                             ? "text-red-600 border-red-400"
