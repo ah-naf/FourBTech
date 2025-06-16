@@ -7,12 +7,18 @@ require("dotenv").config();
 
 const app = express();
 
+const whitelist = [
+  "https://fourbtech-frontend.onrender.com",
+  "http://localhost:3000",
+];
+
 app.use(
   cors({
-    origin: "https://fourbtech-frontend.onrender.com",
+    origin: whitelist,
     credentials: true,
   })
 );
+
 app.use(express.json());
 app.use(cookieParser());
 
